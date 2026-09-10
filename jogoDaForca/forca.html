@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/forca.css" media="screen">
+    <title>Jogo da Forca</title>
+</head>
+<body background="fundo.png">
+
+    <img src="logo.png" id="logotiger">
+    <h1 id="textlogo"> TIGER 
+    </h1>
+    <p>Técnica de Inclusão Gameficadas Étnico Raciais</p>
+
+    <div class="container">
+        <div id="imagem"></div>
+        <div id="palavra-secreta">
+            <!-- <div class="letras">A</div>
+            <div class="letras">F</div>
+            <div class="letras">G</div>
+            <div class="letras">A</div>
+            <div class="letras">S</div>
+            <div class="letras">M</div> -->
+        </div>
+        <!-- Modal1 -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" >JOGO DA FORCA</h1>
+                    </span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <h2 id="frase"></h2> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <div id="teclado">
+            <div class="teclas">
+                <button id="tecla-A" onclick="verificaLetraEscolhida('A')">A</button>
+                <button id="tecla-B" onclick="verificaLetraEscolhida('B')">B</button>
+                <button id="tecla-C" onclick="verificaLetraEscolhida('C')">C</button>
+                <button id="tecla-D" onclick="verificaLetraEscolhida('D')">D</button>
+                <button id="tecla-E" onclick="verificaLetraEscolhida('E')">E</button>
+                <button id="tecla-F" onclick="verificaLetraEscolhida('F')">F</button>
+                <button id="tecla-G" onclick="verificaLetraEscolhida('G')">G</button>
+                <button id="tecla-H" onclick="verificaLetraEscolhida('H')">H</button>
+                <button id="tecla-I" onclick="verificaLetraEscolhida('I')">I</button>
+            </div>
+            <div class="teclas">
+                <button id="tecla-J" onclick="verificaLetraEscolhida('J')">J</button>
+                <button id="tecla-K" onclick="verificaLetraEscolhida('K')">K</button>
+                <button id="tecla-L" onclick="verificaLetraEscolhida('L')">L</button>
+                <button id="tecla-M" onclick="verificaLetraEscolhida('M')">M</button>
+                <button id="tecla-N" onclick="verificaLetraEscolhida('N')">N</button>
+                <button id="tecla-O" onclick="verificaLetraEscolhida('O')">O</button>
+                <button id="tecla-P" onclick="verificaLetraEscolhida('P')">P</button>
+                <button id="tecla-Q" onclick="verificaLetraEscolhida('Q')">Q</button>
+                <button id="tecla-R" onclick="verificaLetraEscolhida('R')">R</button>
+            </div>
+            <div class="teclas">
+                <button id="tecla-S" onclick="verificaLetraEscolhida('S')">S</button>
+                <button id="tecla-T" onclick="verificaLetraEscolhida('T')">T</button>
+                <button id="tecla-U" onclick="verificaLetraEscolhida('U')">U</button>
+                <button id="tecla-V" onclick="verificaLetraEscolhida('V')">V</button>
+                <button id="tecla-W" onclick="verificaLetraEscolhida('W')">W</button>
+                <button id="tecla-X" onclick="verificaLetraEscolhida('X')">X</button>
+                <button id="tecla-Y" onclick="verificaLetraEscolhida('Y')">Y</button>
+                <button id="tecla-Z" onclick="verificaLetraEscolhida('Z')">Z</button>
+                <button id="btnReiniciar">🎮</button>
+            </div>
+        </div>
+        <div id="categoria">
+            <!-- CATEGORIA -->
+        </div>
+        <div class="btn-group">
+        <button id="refresh">Reiniciar</button>
+        <a href="../index.html"><button id="btnmenu" >Menu inicial</button></a>
+        </div>
+    </div>
+    <script src="js/forca.js"></script>
+
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.7.0.min.js"
+  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+  crossorigin="anonymous"></script>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body bgcolor="#4a2723">
+<style type="text/css">
+  #fundo-externo {
+  overflow: hidden;
+  /* para que não tenha rolagem se a imagem de fundo for maior que a tela */
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /* criamos um contexto para posicionamento */
+}
+
+#fundo {
+  position: fixed;
+  /* posição fixa para que a possível rolagem da tela não revele espaços em branco */
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+}
+
+#fundo img {
+  width: 100%;
+  /* com isso imagem ocupará toda a largura da tela. Se colocarmos height: 100% também, a imagem irá distorcer */
+  position: absolute;
+}
+
+#pagina-quiz {
+  background-color:#ebcea0;  
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 200px;
+  padding: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+#pagina-quiz p,
+#pagina-quiz li,
+.wrapper {
+  color: #6d6d6d;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.wrapper {
+  margin: 15px 0;
+}
+
+#pagina-quiz li {
+  list-style-type: none;
+  text-align: left;
+  background-color: transparent;
+  margin: 10px 5px;
+  padding: 15px 10px;
+  border-top: 1px solid #ecedee;
+  border-bottom: 1px solid #ecedee;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+
+/*#pagina-quiz li:hover{
+    background: #ECEEF0;
+}*/
+
+#question p span {
+  color: #898655;
+}
+
+#pagina-quiz .selected,
+.selected:hover {
+  background: #f1e9bb}
+
+#pagina-quiz .correta {
+  /*background: #bec8a3;*/
+  background: #00ff0080;
+  
+}
+
+#pagina-quiz .wrong,
+.wrong:hover {
+  background: #d49274;
+  color: white;
+}
+
+.button {
+  text-align: right;
+  margin-top: 55px;
+}
+
+
+/*.submit:hover, .submit:active, .submit:focus {
+    background: #43A047;
+}*/
+
+.responder {
+  background: #fff;
+  min-width: 120px;
+}
+
+.next {
+  background: #fa994a;
+  min-width: 120px;
+  color: #fff;
+}
+
+.next:hover,
+.next:active,
+.next:focus {
+  background: #e38a42;
+}
+
+.restart {
+  background-color:
+}
+
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  border: 0px solid #000;
+}
+
+.modal-header {
+  border-bottom: 0;
+
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.modal-content {
+  border-radius: 10px;
+  background: red;
+  
+}
+
+#modalErrou .modal-content {
+  background: #e60000;
+}
+
+.modal-content h1 {
+  font-size: 42px;
+  color: white;
+ 
+}
+
+#pagina-quiz .modal-content .modal-body p {
+  font-size: 19px;
+  color: white;
+  
+}
+
+#pagina-quiz .modal-content span {
+  color: white;
+ 
+}
+
+.finish{
+  background-color:#ebcea0;
+  margin: 0 auto;
+  width: 100%;
+  margin-top: 200px;
+  padding: 30px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+ 
+
+}
+.btnrei{
+
+  background-color:#ebcea0 ;
+            font-size: x-large;
+            border: none;
+            cursor: pointer;
+
+    
+}
+
+body{
+  background-image: url(fundo.avif);
+}
+
+
+</style>
+   
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<main id="bkgTelas">
+  <div id ="pagina-quiz" class="quiz">
+    <div class="container">
+      <!-- Modal -->
+      <h1 align="center" style="margin-top: 100px">QUIZ <br>GLOSSÁRIO ETNICO-RACIAL</h1>
+      <div class="modal fade" id="modalAcertou" tabindex="-1" role="dialog" aria-labelledby="modalAcertouTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content" style="background: green;">
+            <div class="modal-header">
+              <h1>Parabéns!!!</h1>
+             
+            </div>
+            <div class="modal-body">
+              <p>A resposta está correta.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modalErrou" tabindex="-1" role="dialog" aria-labelledby="modalErrouTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1>Atenção!</h1>
+              
+            </div>
+            <div class="modal-body">
+              <p>Você selecionou a resposta errada!!!</p>
+              <p>Tente na proxima</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="wrapper" id="pages">
+            <span id="numeroQuiz">1</span><span>/6</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="quiz-questions" id="display-area">
+            <p id="questao"></p>
+            <ul id="alternativa"></ul>
+            <div id="quiz-resultados" style="text-align: center;">
+              <button type="button" name="button" class="responder btn" id="responder">Confirmar</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <canvas id="canvas"></canvas>
+    </div>
+  </div>
+
+  <div align="center" id="finish" class="finish" style="display:none" finish()>
+      <div class="container" >
+    <h1 align="center">QUIZ <br>GLOSSÁRIO ETNICO-RACIAL</h1>
+    <h2 align="center">Resultado:</h2>
+    <h2 id ="acertos"align="center">Infelizmente você não acertou nenhuma questão 
+    </h2>
+    <button aling= "center"id="btnReiniciar" class="btnrei"> reiniciar</button>
+     </div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  var questao1 = {
+  questao: '<span>1.</span> Qual o significado da palavra aquilombamento',
+  alternativas: ['a) Prática de identificar e mudar valores; ', 'b) reservas percentuais de vagas para negros e indígenas; ', 'c) Forma ou tipo de organização dos quilombos. ;'],
+  correta: 2
+};
+var questao2 = {
+  questao: '<span>2.</span> A frase a seguir se relaciona com qual das palavras abaixo: "são práticas que partem da crença de que uma raça é superior a outra"',
+  alternativas: ['a) Racismo', 'b) Umbamda', 'c) Negritude'],
+  correta: 0
+};
+var questao3 = {
+  questao: '<span>3.</span> Qual das palavras abaixo está relacionada a religião afro-brasileiras',
+  alternativas: ['a) Catolicismo, Batuque, Marçonaria', 'b) Budismo, Cristianismo, Candomblé', 'c) Candomblé, Batuque, Umbamda'],
+  correta: 2
+};
+var questao4 = {
+  questao: '<span>4.</span> O que é "cotas raciais"',
+  alternativas: ['a) Preconceito contra o povo afro-brasileiro', 'b) Reservas percentuais de vagas para negros e indígenas. ', 'c) Arte musical de cultura africana'],
+  correta: 1
+};
+var questao5 = {
+  questao: '<span>5.</span>O trecho a seguir se relaciona com qual das palavras abaixo: "conceito que se refere às línguas, comportamentos, cultura e características físicas" ',
+  alternativas: ['a) Batuque', 'b) Etnia', 'c)Macumba'],
+  correta: 1
+};
+var questao6 = {
+  questao: '<span>6.</span> Qual das palavras abaixo se refere a um esporte afro-brasileiro que mistura arte marcial, dança e música',
+  alternativas: ['a) Capoeira', 'b) Balé', 'c) Samba'],
+  correta: 0
+};
+
+
+
+ 
+var questoes = [questao1, questao2, questao3, questao4, questao5, questao6];
+
+
+
+var tags;
+var tagsClass = '';
+var liTagsid = [];
+var alternativaCorreta = 0;
+var quizPage = 1;
+var index = 0;
+var questaoAtual = questoes[index];
+var questaoAnterior;
+var indexAnterior = 0;
+var ulTag = document.getElementsByTagName('ul')[0];
+var botao = document.getElementById('responder');
+var tituloQuestao = document.getElementById('questao');
+var selecionada = 'selected';
+var contadorQuestoes = 0;
+var acertos = 0;
+
+function showQuestions() {
+  if (index != 0) {
+    // cria o botão de responder nas próximas páginas
+    ulTag.innerHTML = '';
+    botao.innerHTML = 'Responder';
+    botao.className = 'responder btn';
+    botao.id = 'responder';
+    document.getElementById('numeroQuiz').innerHTML = quizPage;
+  }
+
+    tituloQuestao.innerHTML = questaoAtual.questao;
+
+  // gera as alternativas
+  for (var i = 0; i < questaoAtual.alternativas.length; i++) {
+    var newAlt = document.createElement('li');
+    newAlt.id = 'alt' + (i + 1);
+    newAlt.className = "notSelected";
+    var textAlt = document.createTextNode(questaoAtual.alternativas[i]);
+    newAlt.appendChild(textAlt);
+    var addNewAltHere = document.getElementById('alternativa');
+    addNewAltHere.appendChild(newAlt);
+    console.log(questaoAtual.alternativas[i]);
+  }
+  var $liTags = $('.notSelected').click(function(list) {
+    list.preventDefault();
+    $liTags.removeClass(selecionada);
+    $(this).addClass(selecionada);
+    for (var i = 0; i < questaoAtual.alternativas.length; i++) {
+      // console.log(liTagsid[i]);
+      if ($liTags[i].className == "notSelected selected") {
+        //armazena a alternativa
+        tags = $liTags[i].id;
+        // tagsClass = $LiTags.className;
+        console.log(tags);
+        tagsClassName = $liTags[i];
+      }
+    }
+  });
+  botao.onclick = function() {
+    checkAnswer()
+  };
+}
+
+
+  showQuestions();
+
+function checkAnswer() {
+  var selectedItem = document.getElementById(tags);
+
+  // Caso não tenha escolhido alguma alternativa
+  if (selectedItem == undefined) {
+    alert("Por favor selecione uma alternativa.")
+    return
+  } else {
+    var userAns = selectedItem.innerHTML;
+  }
+  // muda o background de acordo com a escolha
+  if (userAns == questaoAtual.alternativas[questaoAtual.correta]) {
+    console.log("Acertou: " + userAns);
+    $('#modalAcertou').modal();
+    contadorQuestoes++;
+    acertos++;
+    document.getElementById("acertos").innerHTML= 'Você acertou: ' + acertos + '/6 questões'
+
+    
+    if(contadorQuestoes<6){
+      setTimeout(function() {
+        $('#modalAcertou').modal('hide');
+        criaBtn();
+        botao.click();
+      }, 2000);
+    }
+    else{   
+
+      setTimeout(function() {
+        $('#modalAcertou').modal('hide');
+        $('#pagina-quiz').css("display", "none");
+        $('#finish').css("display", "block");
+      }, 2000);
+    }
+
+    selectedItem.className = 'correta';
+    alternativaCorreta++;
+  } 
+  else{
+    $('#modalErrou').modal();    
+    setTimeout(function() {
+      $('#modalErrou').modal('hide');
+    }, 2000);
+     contadorQuestoes++;
+     if(contadorQuestoes<6){
+      setTimeout(function() {
+        $('#modalErrou').modal('hide');
+        criaBtn();
+        botao.click();
+      }, 2000);
+    }
+    else{   
+
+      setTimeout(function() {
+        $('#modalErrou').modal('hide');
+        $('#pagina-quiz').css("display", "none");
+        $('#finish').css("display", "block");
+      }, 2000);
+    }
+
+
+  }
+
+
+  function criaBtn(){
+    // Cria o botão para a próxima pergunta após responder certo
+    botao.innerHTML = 'Próxima Pergunta';
+    botao.className = 'next btn';
+    botao.id = 'next';
+    questaoAnterior = questaoAtual;
+    quizPage++;
+    index++;
+    questaoAtual = questoes[index];
+
+    botao.onclick = function() {
+      showQuestions()
+    };
+  }
+  return
+}
+
+
+$("#btnReiniciar").on("click", function(event) {
+
+    location.reload();
+
+});
+
+
+
+</script> 
+</body>
+</html>
